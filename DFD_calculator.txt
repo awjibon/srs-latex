@@ -1,0 +1,50 @@
+@startuml
+
+!define PROCESS(x) rectangle "x" as x <<Process>>
+!define DATASTORE(x) rectangle "x" as x <<DataStore>>
+!define SYSTEM(x) rectangle "x" as x <<System>>
+
+
+' Define Entities, Processes, and Data Stores
+actor Student as s
+actor Teacher as t
+SYSTEM("Calculator")
+SYSTEM("School_Server")
+SYSTEM("School_Authorization")
+
+' Styling for Processes to be rounded
+skinparam rectangle<<Process>> {
+    BackgroundColor White
+    RoundCorner 15
+}
+
+' Styling for Processes to be rounded
+skinparam rectangle<<System>> {
+    BackgroundColor White
+    RoundCorner 0
+}
+
+
+' Styling for Data Stores to remain rectangular
+skinparam rectangle<<DataStore>> {
+    BackgroundColor LightGrey
+    RoundCorner 0
+}
+
+
+s --> Calculator: "Operation\ncommands"
+t --> Calculator: "Operation\ncommands"
+Calculator --> School_Server: "Operation\nresults"
+Calculator --> School_Authorization: "User\ninfo"
+
+s --> Calculator: "Request\naccess"
+t --> Calculator: "Approve\nrequest"
+
+School_Authorization --> Calculator: "Authentication\nresult"
+School_Server --> Calculator: "Operation\nhistory"
+
+left to right direction
+
+
+
+@enduml
